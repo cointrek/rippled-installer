@@ -1,0 +1,44 @@
+sudo apt-get update
+sudo apt-get -y upgrade
+
+sudo apt-get -y install git
+sudo apt-get -y install cmake
+sudo apt-get -y install pkg-config
+sudo apt-get -y install protobuf-compiler
+sudo apt-get -y install libprotobuf-dev
+sudo apt-get -y install libssl-dev
+sudo apt-get -y install wget
+sudo apt-get -y install doxygen
+
+cd ~
+wget https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz
+mv boost_1_64_0.tar.gz /home/root/
+cd /home/root/
+tar xvzf boost_1_64_0.tar.gz
+rm boost_1_64_0.tar.gz
+cd boost_1_64_0
+./bootstrap.sh
+./b2 -j 4
+
+cd ~
+wget https://cmake.org/files/v3.10/cmake-3.10.3.tar.gz
+tar xvzf cmake-3.10.3.tar.gz
+cd cmake-3.10.3
+./bootstrap
+make
+make install
+
+cd ~
+export BOOST_ROOT=/home/`whoami`/boost_1_64_0
+echo export BOOST_ROOT=/home/`whoami`/boost_1_64_0 >> ~/.bashrc
+source ~/.bashrc
+
+git clone https://github.com/ripple/rippled.git
+cd rippled
+git checkout master
+mkdir build
+cd build
+cmake -Dtarget=gcc.release.unity ..
+cmake --build . -- -j 4
+
+./rippled -u
