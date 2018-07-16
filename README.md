@@ -11,4 +11,4 @@ cd rippled-installer
 sudo ./rippled-installer
 
 # Warnings
-I have not tested this outside of Ubunut currently. If you try this out, please make an issue and we can improve it.
+I have not tested this outside of Ubuntu currently. If you try this out, please make an issue and we can improve it.
